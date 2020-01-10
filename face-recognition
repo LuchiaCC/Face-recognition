@@ -1,0 +1,27 @@
+import face_recognition
+import cv2
+
+ice_image = face_recognition.load_image_file("ice.jpg")
+wind_image = face_recognition.load_image_file("wind.jpg")
+unknown1_image = face_recognition.load_image_file("unknown1.jpg")
+unknown2_image = face_recognition.load_image_file("unknown2.jpg")
+
+ice_encoding = face_recognition.face_encodings(ice_image)[0]
+wind_encoding = face_recognition.face_encodings(wind_image)[0]
+unknown1_encoding = face_recognition.face_encodings(unknown1_image)[0]
+unknown2_encoding = face_recognition.face_encodings(unknown2_image)[0]
+
+results1 = face_recognition.compare_faces([ice_encoding, wind_encoding], unknown1_encoding )
+results2= face_recognition.compare_faces([ice_encoding, wind_encoding], unknown2_encoding )
+labels = ['ice', 'wind']
+
+print('results1:'+str(results1))
+print('results2:'+str(results2))
+
+for i in range(0, len(results1)):
+    if results1[i] == True:
+        print('The person is:'+labels[i])
+
+for i in range(0, len(results2)):
+    if results2[i] == True:
+        print('The person is:'+labels[i])
